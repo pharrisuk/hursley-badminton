@@ -1,0 +1,57 @@
+<div flex sytle="margin: 0px; padding: 0px; position: relative;">
+    <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch style="position: relative;">
+        <div style="position: absolute; right: 5px; top: 5px;" ng-if="user.hasRole('admin')" ng-click="delete()">
+            <i class=" fa fa-trash "></i>
+        </div>
+        <md-card-title style="padding: 8px 10px; ">
+            <md-card-title-text>
+                <span class="md-headline ">{{ data.timestamp | date: 'EEEE MMMM d @ hh:mm ' }}</span>
+                <span class="md-subhead " style="padding-top: 0px; ">{{ data.court }}</span>
+                <span class="md-subhead " style="padding-top: 0px; " ng-if="data.comments != null && data.comments != ''"><b>Notes : </b>{{ data.comments }}</span>
+                <ul style="margin-bottom: 0px; padding-left: 10px; ">
+                    <li ng-repeat="player in data.players " style="list-style-type: none;">
+                        <div style="width: 30px; height: 30px; background: url({{player.photoURL}}); background-size: cover; border-radius : 50%; display: inline-block !important; "></div>
+                        <div style="height: 30px; display: inline-block; vertical-align: top; margin-top: 5px;">{{ player.name }}</div>
+                    </li>
+                </ul>
+                <ul style="margin-bottom: 0px; padding-left: 10px; " ng-if="data.players== null || data.players.length==0 ">
+                    <li style="list-style-type: none;">No Players.</li>
+                </ul>
+
+                <ul style="margin-bottom: 0px; padding-left: 10px; ">
+                    <li ng-repeat="player in data.reserves " style="list-style-type: none;">
+
+                        <div style="width: 30px; height: 30px; background: url({{player.photoURL}}); background-size: cover; border-radius : 50%; display: inline-block !important; "></div>
+                        <div style="height: 30px; display: inline-block; vertical-align: top; margin-top: 5px;">{{ player.name }} <span>( Reserve )</span></div>
+                    </li>
+                </ul>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-actions layout="row " layout-align="end center ">
+            <md-button ng-if="canAddAsPlayer( data, user, funds ) " ng-click="add() ">
+                <i class="fa fa-fw fa-plus-circle "></i> Add as Player
+            </md-button>
+            <md-button ng-if="canAddAsReserve( data, user, funds ) " ng-click="reserve() ">
+                <i class="fa fa-fw fa-plus "></i> Add as Reserve
+            </md-button>
+            <md-button ng-if="user.isLoggedIn() && !isPlayer(data.players, user.getEmail()) && !isPlayer(data.reserves, user.getEmail()) && funds <=- 1.2 ">
+                <i class="fa fa-fw fa-gbp "></i> More funds needed
+            </md-button>
+
+            <addtocalendar ng-if="user.isLoggedIn() && ( isPlayer(data.players, user.getEmail()) || isPlayer(data.reserves, user.getEmail()) ) " start-date="{{ data.timestamp | date: 'yyyyMMddTHHmmssZ' }} " end-date="{{ data.timestamp + 3600000 | date: 'yyyyMMddTHHmmssZ' }} " title="Badminton Match " location="IBM Hursley Clubhouse, {{ data.court }} " class-name="btn btn-sm btn-default dropdown-toggle " description="Lunchtime badminton. " btn-text="Add to Calendar ">
+            </addtocalendar>
+
+            <md-button ng-if="user.isLoggedIn() && isPlayer(data.players, user.getEmail()) " ng-click="remove() ">
+                <i class="fa fa-fw fa-ban "></i> Cancel booking
+            </md-button>
+            <md-button ng-if="user.isLoggedIn() && isPlayer(data.reserves, user.getEmail()) " ng-click="unreserve() ">
+                <i class="fa fa-fw fa-ban "></i> Cancel reserve booking
+            </md-button>
+
+            <login firebase="user " flex="100 " ng-if="!user.isLoggedIn() "></login>
+
+
+
+        </md-card-actions>
+    </md-card>
+</div>

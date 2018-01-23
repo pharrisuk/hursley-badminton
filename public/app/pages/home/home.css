@@ -1,0 +1,35 @@
+.leafletMap {
+    z-index: 500;
+}
+
+.leaflet-control-layers {
+    display: none;
+}
+
+.mapActions {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1000;
+}
+
+md-fab-speed-dial p.note {
+    font-size: 1.2rem;
+}
+
+md-fab-speed-dial md-fab-actions .fa-fw,
+md-fab-speed-dial md-fab-trigger .fa-fw {
+    top: 5px;
+    position: relative;
+    font-size: 2em;
+}
+
+._md-open-menu-container {
+    bottom: 60px;
+    top: auto !important;
+    z-index: 4000;
+}
+
+.md-button.md-jlr-theme:not([disabled]).md-focused {
+    background: none !important;
+}

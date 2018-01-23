@@ -1,0 +1,15 @@
+.badminton-booking-animate-opacity.ng-hide-add,
+.badminton-booking-animate-opacity.ng-hide-remove {
+    transition: 2s ease all;
+    -webkit-transition: 2s ease all;
+}
+
+.badminton-booking-animate-opacity.ng-hide-add-active,
+.badminton-booking-animate-opacity.ng-hide-remove {
+    opacity: 0;
+}
+
+.badminton-booking-animate-opacity.ng-hide-add,
+.badminton-booking-animate-opacity.ng-hide-remove-active {
+    opacity: 1;
+}

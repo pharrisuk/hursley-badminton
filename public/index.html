@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Badminton Booking System</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <base href="/">
+
+    <!-- 3rd Party JavaScript -->
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/moment/min/moment.min.js"></script>
+    <script src="bower_components/mdPickers/dist/mdPickers.min.js"></script>
+    <script src="bower_components/angular-addtocalendar/addtocalendar.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="bower_components/downloadjs/download.min.js"></script>
+    <script src="bower_components/angular-file-saver/dist/angular-file-saver.bundle.js"></script>
+
+    <!-- application JavaScript -->
+    <script src="app/app.js"></script>
+    <script src="app/pages/home/home.controller.js"></script>
+    <script src="app/pages/courts/courts.controller.js"></script>
+    <script src="app/pages/admin/admin.controller.js"></script>
+    <script src="app/pages/myprofile/myprofile.controller.js"></script>
+    <script src="app/pages/login/login.controller.js"></script>
+
+    <script src="app/services/firebase.service.js"></script>
+    <script src="app/services/players.service.js"></script>
+    <script src="app/services/balance.service.js"></script>
+    <script src="app/services/nav.service.js"></script>
+    <script src="app/services/loading.service.js"></script>
+    <script src="app/services/toaster.service.js"></script>
+    <script src="app/services/court.service.js"></script>
+
+    <script src="app/directives/header/header.directive.js"></script>
+    <script src="app/directives/court/court.directive.js"></script>
+    <script src="app/directives/login/login.directive.js"></script>
+
+    <!-- 3rd party CSS -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="bower_components/mdPickers/dist/mdPickers.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- app CSS -->
+    <link rel="stylesheet" href="stylesheets/col-xxs.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="stylesheets/animations.css">
+    <link rel="stylesheet" href="app/directives/header/header.css">
+    <link rel="stylesheet" href="app/directives/court/court.css">
+    <link rel="stylesheet" href="app/pages/home/home.css">
+    <link rel="stylesheet" href="app/pages/courts/courts.css">
+    <link rel="stylesheet" href="app/pages/admin/admin.css">
+    <link rel="stylesheet" href="app/pages/myprofile/myprofile.css">
+
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyCgiymU3wBhE1BGeXBG0-IfUdQZ_-0eJdc",
+            authDomain: "hursley-badminton.firebaseapp.com",
+            databaseURL: "https://hursley-badminton.firebaseio.com",
+            projectId: "hursley-badminton",
+            storageBucket: "hursley-badminton.appspot.com",
+            messagingSenderId: "113602288317"
+        };
+        firebase.initializeApp(config);
+    </script>
+</head>
+
+<body ng-app="badminton-booking" ng-controller="MainCtrl" class="badminton-booking">
+    <div class="badminton-booking-container">
+
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left">
+            <md-toolbar class="md-theme-jlr">
+                <h1 class="md-toolbar-tools"></h1>
+                <i class="fa fa-times-circle-o fa-2x" ng-click="closeMenu()" style="position: absolute; right: 10px; top: 10px;"></i>
+            </md-toolbar>
+            <md-content layout-padding="">
+                <md-card ng-if="firebase.isLoggedIn()" style="padding: 0px;">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline" ng-if="firebase.getUser().displayName != ''">{{ firebase.getUser().displayName }} </span>
+                            <span class="md-headline" ng-if="firebase.getUser().displayName == ''">{{ firebase.getUser().email | email }} </span>
+                            <span class="md-headline">{{ userBalance | currency : "£" }} </span>
+                        </md-card-title-text>
+                        <md-card-title-media>
+                            <div class="md-media-sm card-media">
+                                <div style="float: right; width: 100px; height: 100px;-webkit-border-radius: 50px; -moz-border-radius: 50px; border-radius: 50px; background: url({{firebase.getUser().photoURL}}); background-size: cover;" ng-if="firebase.isLoggedIn()"></div>
+                            </div>
+                        </md-card-title-media>
+                    </md-card-title>
+                </md-card>
+
+                <div class="badminton-booking-sidemenu">
+                    <ul>
+                        <li ng-click="navigate('home', {  } )"><i class="fa fa-fw fa-home"></i>&nbsp;Home</li>
+                        <li ng-click="navigate('courts', { } )"><i class="fa fa-fw fa-calendar"></i>&nbsp;All Courts</li>
+
+                        <li class="divider"></li>
+                        <li ng-if="!firebase.isLoggedIn()">
+                            <login firebase="firebase" small="'true'"></login>
+                        </li>
+
+                        <li ng-if="firebase.isLoggedIn()" ng-click="navigate('myprofile', {  } )"><i class="fa fa-fw fa-user"></i>&nbsp;My Profile</li>
+                        <li ng-if="firebase.hasRole('admin')" ng-click="navigate('admin', {  } )"><i class="fa fa-fw fa-cog"></i>&nbsp;Administration</li>
+
+                        <li ng-click="firebase.logout()" ng-if="firebase.isLoggedIn()">
+                            <i class="fa fa-fw fa-sign-out"></i>&nbsp;Sign Out
+                        </li>
+
+                    </ul>
+                </div>
+            </md-content>
+        </md-sidenav>
+
+        <div class="badminton-booking-app-overlay" ng-click="toggleMenu()">
+        </div>
+        <div class="badminton-booking-app">
+            <badminton-booking-header is-loading="loadingService.isLoading()" toggle-side-menu="toggleMenu()" page-title="nav.getTitle()" page-icon="nav.getIcon()"></badminton-booking-header>
+            <div class="badminton-booking-content" ui-view="">
+                <!-- the pages will go in here -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

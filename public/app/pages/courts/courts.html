@@ -1,0 +1,9 @@
+<md-content class="pageContent">
+    <p>
+        The following shows all the upcoming available courts and those currently registered to play in those matches.
+    </p>
+    <p ng-if="firebase.isLoggedIn()" ng-class="{ 'red' : userBalance < 0 }">Your current balance is <span style="font-weight:bold;">{{ userBalance | currency:"£" : 2 }}</span></p>
+    <div layout-gt-xs="row" layout="column" layout-wrap>
+        <badminton-court flex="50" ng-if="booking.timestamp > now" ng-repeat="booking in bookings track by booking.id" user="firebase" funds="userBalance" data="booking" add="addToBooking( booking, false )" remove="removeFromBooking( booking, false )" reserve="addToBooking( booking, true )" unreserve="removeFromBooking( booking, true )" delete="deleteBooking( booking )"></badminton-court>
+    </div>
+</md-content>

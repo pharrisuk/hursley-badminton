@@ -1,0 +1,60 @@
+<md-content class="pageContent">
+    <div ng-if="!firebase.isLoggedIn()">
+        <p>Welcome to the badminton booking site. Here you will be able to log in and book courts that are available.</p>
+        <p>We are a group of like minded, badminton players who are here for fun. We use this to administer bookings. Each court is booked in advance and players can add themselves to a court. Once 4 people are booked against a court subsequent players are added to a reserve list ( but not charged ). If you are a reserve and you see the number of people booked has dropped below four then you should click the 'add to court' to change from reserve definite.
+        </p>
+        <p>Barry Gunner sends out a note at the beginning of the week when new courts are posted (for two weeks time). Should you need to mail the badminton group (e.g. to see if anyone can fill a spot you've had to release at late notice) you can use the public distribution list 'HURLAB LUNCHTIME BADMINTON1'</p>
+    </div>
+
+    <div ng-if="news != null">
+        <md-toolbar class="md-accent">
+            <div class="md-toolbar-tools">
+                <h5><span>{{ news.date | date : 'short' }} : </span> {{ news.update }}</h5>
+            </div>
+        </md-toolbar>
+    </div>
+
+    <h3>Next two bookings</h3>
+    <div layout="column" ng-if="bookings == null">
+        <md-card flex="100" md-theme="default">
+            <md-card-title>
+                <span><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i></span> Loading Bookings...
+            </md-card-title>
+        </md-card>
+    </div>
+    <div layout="column" ng-if="bookings.length === 0">
+        <md-card flex="100" md-theme="default">
+            <md-card-title>
+                <span><i class="fa fa-warning fa-3x fa-fw"></i></span> No upcomming bookings.
+            </md-card-title>
+        </md-card>
+    </div>
+    <div flex layout-gt-xs="row" layout="column" ng-if="bookings.length != 0">
+        <badminton-court flex ng-repeat="booking in bookings track by booking.id" user="firebase" funds="userBalance" data="booking" add="addToBooking( booking, false )" remove="removeFromBooking( booking, false )" reserve="addToBooking( booking, true )" unreserve="removeFromBooking( booking, true )" delete="deleteBooking ( booking )"></badminton-court>
+    </div>
+
+    <h3>Current Players</h3>
+    <div layout="column" ng-if="players == null">
+        <md-card flex="100" md-theme="default">
+            <md-card-title>
+                <span><i class="fa fa-spinner fa-spin fa-3x fa-fw"></i></span> Loading Players...
+            </md-card-title>
+        </md-card>
+    </div>
+    <div layout-gt-xs="row" layout="column" ng-if="players != null" layout-wrap>
+        <md-card flex="20" ng-repeat="player in players" md-theme="default" style="min-height: 112px;">
+            <md-card-title>
+                <md-card-title-text>
+                    <span class="md-headline" ng-if="player.displayName != ''">{{ player.displayName }}</span>
+                    <span class="md-headline" ng-if="player.displayName == ''">{{ player.email | email }}</span>
+                    <span class="md-headline" ng-if="firebase.isLoggedIn() && player.mobile != null" style="font-size: 0.8em;"><i class="fa fa-mobile"></i> {{ player.mobile }}</span>
+                </md-card-title-text>
+                <md-card-title-media style="padding-left: 20px;">
+                    <div class="md-media-sm card-media">
+                        <div style="float: right; width: 100px; height: 100px;-webkit-border-radius: 50px; -moz-border-radius: 50px; border-radius: 50px; background: url({{player.photoURL}}); background-size: cover;"></div>
+                    </div>
+                </md-card-title-media>
+            </md-card-title>
+        </md-card>
+    </div>
+</md-content>

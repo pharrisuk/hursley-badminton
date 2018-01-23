@@ -1,0 +1,15 @@
+<header class="badminton-booking-header">
+    <div class="badminton-booking-header-background md-jlr-theme md-primary md-hue-1">
+
+    </div>
+    <div class="badminton-booking-header-content">
+        <div class=" badminton-booking-header-menu " ng-click="toggleSideMenu() ">
+            <i class="fa fa-bars badminton-booking-menu "></i>
+        </div>
+        <div ng-show="pageTitle " class="badminton-booking-pagetitle " style="position: relative; ">
+            <span style="position: absolute; right: 36px; top: 2px; font-size: 0.7em; " ng-show="isLoading ">Loading...</span>
+            <md-progress-circular ng-show="isLoading " class="md-hue-2 " md-diameter="25 " style="float: right;margin-top: 10px; margin-right: 10px; "></md-progress-circular>
+            <h3><i class="fa fa-fw {{ pageIcon }} "></i>&nbsp;{{ pageTitle }}</h3>
+        </div>
+    </div>
+</header>

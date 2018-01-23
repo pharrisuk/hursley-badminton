@@ -1,0 +1,91 @@
+<md-content class="pageContent">
+    <p>Use this page to add a new booking to the list available, and to administer users.</p>
+
+    <h3>New Booking</h3>
+
+    <div layout="row" layout-wrap>
+        <!-- Use floating label instead of placeholder -->
+        <div flex="50" flex-gt-sm="33">
+            <mdp-date-picker mdp-open-on-click required name="bookingDate" mdp-placeholder="Booking date" mdp-format="DD/MM/YYYY" ng-model="bookingDate">
+            </mdp-date-picker>
+        </div>
+
+        <div flex="50" flex-gt-sm="33">
+            <mdp-time-picker name="bookingTime" ng-model="bookingTime" mdp-placeholder="Booking time" mdp-format="HH:mm"></mdp-time-picker>
+        </div>
+
+        <div flex="50" flex-gt-sm="33">
+            <md-input-container flex class="md-icon-float" style="margin: 15px 0px 0px 0px; width: 100%;">
+                <!-- Use floating label instead of placeholder -->
+                <label>Court</label>
+                <md-icon>
+                    <i style="margin-left: 5px;" class="fa fa-fw fa-map-marker"></i>
+                </md-icon>
+                <md-select ng-model="selectedCourt">
+                    <md-option ng-value="court" ng-repeat="court in allCourts">
+                        {{court.name}}
+                    </md-option>
+                </md-select>
+                <div ng-messages="date.$error">
+                    <div ng-message="required">Court is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+
+        <div flex="50" flex-gt-sm="33">
+            <md-input-container flex class="md-icon-float" style="margin: 15px 0px 0px 0px; width: 100%;">
+                <!-- Use floating label instead of placeholder -->
+                <label>Notes</label>
+                <md-icon>
+                    <i style="margin-left: 5px;" class="fa fa-fw fa-sticky-note"></i>
+                </md-icon>
+                <input ng-model="notes">
+                <div ng-messages="date.$error">
+                    <div ng-message="required">Court is required.</div>
+                </div>
+            </md-input-container>
+        </div>
+
+        <div flex="50" flex-gt-sm="33">
+            <md-checkbox ng-model="noCost" aria-label="Free court booking">
+                Free court booking
+            </md-checkbox>
+
+        </div>
+
+    </div>
+
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-primary" ng-click="addBooking()">
+            <i class="fa fa-fw fa-plus"></i>&nbsp;Add Booking
+        </md-button>
+    </md-dialog-actions>
+
+    <h3>Player Balances</h3>
+
+    <div layout-gt-xs="row" layout="column">
+        <table style="width: 100%">
+            <tr>
+                <th style="width: 60px;"></th>
+                <th>Name</th>
+                <th ng-if="$mdMedia('gt-xs')">Email</th>
+                <th>Balance</th>
+                <th style="width: 100px;">Actions</th>
+            </tr>
+            <tr ng-repeat="player in players">
+                <td style="width: 50px;">
+                    <div style="width: 40px; height: 40px; background: url({{player.photoURL}}); background-size: cover; border-radius : 50%; display: inline-block !important; "></div>
+                </td>
+                <td>{{ player.displayName }}</td>
+                <td ng-if="$mdMedia('gt-xs')">{{ player.email }}</td>
+                <td ng-class="{ 'red' : player.balance < 0 }">{{ player.balance | currency : '£' : 2 }}</td>
+                <td>
+                    <md-button class="md-raised md-primary" ng-click="setNewBalance( event, player )">
+                        <i class="fa fa-fw fa-gbp"></i> Set<span ng-if="$mdMedia('gt-xs')"> Balance</span>
+                    </md-button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</md-content>

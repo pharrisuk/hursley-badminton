@@ -1,0 +1,225 @@
+/* style.css
+ * This file provides css styles.
+ */
+
+body,
+html {
+    /* IE6-9 */
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    font-family: "UnileverFont", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    overflow: hidden;
+    color: rgb(30, 30, 30);
+}
+
+.footerMenu {
+    width: 110px !important;
+}
+
+@media (max-width: 767px) {
+    .hidden-xs {
+        display: none !important;
+    }
+    .footerMenu {
+        width: 40px !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .hidden-sm {
+        display: none !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .hidden-md {
+        display: none !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .hidden-lg {
+        display: none !important;
+    }
+}
+
+
+/*
+Page Layout
+*/
+
+.badminton-booking-container {
+    height: 100%;
+}
+
+md-sidenav {
+    /*
+    width: 250px;
+    height: 100%;
+    position: absolute;
+    */
+    z-index: 20000;
+}
+
+md-backdrop._md-sidenav-backdrop {
+    z-index: 1999;
+}
+
+.badminton-booking-sidemenu ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.badminton-booking-sidemenu ul li {
+    padding: 12px;
+    font-size: 1.3em;
+    border-bottom: 1px solid #46494C;
+}
+
+.badminton-booking-sidemenu ul li:hover {
+    background-color: rgb(149, 172, 172);
+    cursor: pointer;
+}
+
+.badminton-booking-app-overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    pointer-events: none;
+    left: 0px;
+    transition: 0.5s left;
+    -webkit-transition: 0.5s left;
+    z-index: 1000;
+}
+
+.badminton-booking-app {
+    width: 100%;
+    position: relative;
+    height: 100%;
+    left: 0px;
+    transition: 0.5s left;
+    -webkit-transition: 0.5s left;
+}
+
+.badminton-booking-container.badminton-booking-sidemenu-open .badminton-booking-sidemenu {
+    margin-left: 0px;
+}
+
+.badminton-booking-container.badminton-booking-sidemenu-open .badminton-booking-app {
+    left: 249px;
+}
+
+.badminton-booking-container.badminton-booking-sidemenu-open .badminton-booking-app-overlay {
+    left: 249px;
+    pointer-events: all;
+}
+
+.badminton-booking-content {
+    position: absolute;
+    top: 110px;
+    bottom: 0px;
+    padding: 0px;
+    text-align: center;
+    width: 100%;
+}
+
+.pageContent {
+    margin: 15px;
+    text-align: left;
+    overflow-y: scroll;
+    top: 0px;
+    bottom: 0px;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    background-color: transparent;
+}
+
+.red {
+    color: red;
+}
+
+
+/*
+Components
+*/
+
+.badminton-booking-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.badminton-booking-logo {
+    height: 32px;
+}
+
+.badminton-booking button.badminton-booking-button {
+    border: 1px solid white;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 12px;
+    margin: 10px auto;
+    display: block;
+    width: 75%;
+    max-width: 300px;
+}
+
+.badminton-booking button.badminton-booking-button-white {
+    background: white;
+    color: #951B81;
+}
+
+.badminton-booking button.badminton-booking-button:hover {
+    outline: 3px solid;
+    outline-color: #951B81;
+}
+
+.badminton-booking button.badminton-booking-button-white:hover {
+    outline-color: #951B81;
+}
+
+
+/*
+ * override Angular MD 
+ */
+
+md-toolbar {
+    height: 64px;
+}
+
+@media (min-width: 960px) {
+    md-toast._md-top {
+        top: 64px;
+    }
+}
+
+md-toast .md-toast-content {
+    min-height: 64px !important;
+}
+
+md-toast.md-jlr-success-theme .md-toast-content {
+    background-color: rgb(149, 172, 172);
+}
+
+md-toast.md-jlr-warning-theme .md-toast-content {
+    background-color: rgb(189, 132, 91)
+}
+
+md-toast.md-jlr-error-theme .md-toast-content {
+    background-color: rgb(108, 70, 70)
+}
+
+md-progress-circular.md-hue-2 path {
+    stroke: #1985A1;
+}
+
+md-toast,
+.md-dialog-container {
+    z-index: 5000;
+}
+
+.md-media-sm img {
+    border-radius: 50%;
+}

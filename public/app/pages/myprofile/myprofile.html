@@ -1,0 +1,76 @@
+<md-content style="margin: 15px; text-align: left; overflow-y: scroll;
+    top: -5px;
+    bottom: 0px;
+    position: absolute;
+    left: 0px;
+    right: 0px;">
+    <div class="md-media-sm card-media" ng-if="user.photoURL != null" style="text-align: right; position: relative; height: 80px;">
+        <div style="float: right; width: 100px; height: 100px;-webkit-border-radius: 50px; -moz-border-radius: 50px; border-radius: 50px; background: url({{ user.photoURL }}); background-size: cover;"></div>
+    </div>
+    <div style="text-align: left; position: relative; padding-bottom: 10px;">
+        <h4 style="margin: 0px;">My Profile</h4>
+    </div>
+
+    <div layout="row">
+        <div flex="10">
+            <i style="margin-left: 5px;" class="fa fa-fw fa-camera"></i>
+        </div>
+        <div flex>
+            <input class="ng-hide" id="input-file-id" type="file" ng-model="fileUpload" onchange="angular.element(this).scope().setFile(this)" />
+            <label for="input-file-id" class="md-button md-raised md-primary" style="margin: 0px; padding: 3px 15px;">
+                <i class="fa fa-file"></i>&nbsp;
+                <span ng-if="currentFile == null">Select new Profile Photo</span>
+                <span ng-if="currentFile != null">{{ currentFile.name }}, {{ currentFile.type }}</span>
+            </label>
+        </div>
+        <div flex="20" style="text-align: right;">
+            <md-button class="md-fab md-primary" ng-disabled="currentFile.name == null" aria-label="Upload" ng-click="uploadFile()" style="margin: 0px;">
+                <i class="fa fa-upload"></i>
+            </md-button>
+        </div>
+    </div>
+
+    <md-input-container class="md-icon-float md-block" style="margin: 15px 0px 0px 0px;">
+        <!-- Use floating label instead of placeholder -->
+        <label>Name</label>
+        <md-icon>
+            <i style="margin-left: 5px;" class="fa fa-fw fa-user"></i>
+        </md-icon>
+        <input ng-model="user.displayName" type="text" ng-required="true">
+    </md-input-container>
+    <md-input-container class="md-icon-float md-block" style="margin: 15px 0px 0px 0px;">
+        <!-- Use floating label instead of placeholder -->
+        <label>Mobile #</label>
+        <md-icon>
+            <i style="margin-left: 5px;" class="fa fa-fw fa-mobile"></i>
+        </md-icon>
+        <input ng-model="user.mobile" type="text" ng-required="true" minlength="11" maxlength="11" ng-pattern="/[0][0-9]{10}$/" />
+    </md-input-container>
+    <md-input-container class="md-icon-float md-block" style="margin: 15px 0px 0px 0px;">
+        <!-- Use floating label instead of placeholder -->
+        <label>Email</label>
+        <md-icon>
+            <i style="margin-left: 5px;" class="fa fa-fw fa-envelope"></i>
+        </md-icon>
+        <input ng-model="user.email" type="email" disabled ng-required="true" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+    </md-input-container>
+
+    <md-input-container class="md-icon-float md-block" style="margin: 15px 0px 0px 0px;">
+        <!-- Use floating label instead of placeholder -->
+        <label>Current Balance</label>
+        <md-icon>
+            <i style="margin-left: 5px;" class="fa fa-fw fa-gbp"></i>
+        </md-icon>
+        <input ng-model="balance" type="text" disabled />
+    </md-input-container>
+
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button class="md-raised md-primary" ng-click="cancel()">
+            <i class="fa fa-fw fa-check"></i>&nbsp;Okay
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="save()" ng-disabled="isDisabled()">
+            <i class="fa fa-fw fa-save"></i>&nbsp;Save
+        </md-button>
+    </md-dialog-actions>
+</md-content>
