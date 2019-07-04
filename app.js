@@ -103,10 +103,9 @@ app.all('/*', function (req, res) {
 
 //app.use(bodyParser.json());
 
-var port = 6006;
+var port = process.env.PORT || 3000
+app.listen(port, function() {
+    console.log("To view your app, open this link in your browser: http://localhost:" + port);
+});
 
 // start server on the specified port and binding host
-app.listen(port, function () {
-    // print a message when the server starts listening
-    console.log("server starting");
-});

@@ -1,0 +1,5 @@
+---
+applications:
+ - name: Test-phph
+   random-route: true
+   memory: 256M
