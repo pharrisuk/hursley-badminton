@@ -1,6 +1,6 @@
 app.service('court', ['$q', '$http', '$rootScope', 'toasterService', 'balance', 'firebase', function ($q, $http, $rootScope, toasterService, balance, fb) {
 
-    var courtCost = 0.7;
+    var courtCost = 1.15;
 
     return {
         get: function () {

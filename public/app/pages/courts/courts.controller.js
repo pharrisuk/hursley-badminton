@@ -37,7 +37,7 @@ angular.module('badminton-booking')
         }
 
         var getProfileImage = function (player) {
-            var url = "https://hursley-badminton.firebaseio.com/players/" + player.uid + "/photoURL.json";
+            var url = "https://hursleybadminton.firebaseio.com/players/" + player.uid + "/photoURL.json";
             $http.get(url).then(function (resp) {
                 player.photoURL = resp.data;
             }, function (error) {

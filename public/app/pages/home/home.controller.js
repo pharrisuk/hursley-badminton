@@ -19,7 +19,6 @@ angular.module('badminton-booking')
         getAllPlayers();
 
         function getCourts() {
-
             court.getBookings().then(function (data) {
                 var bookings = [];
                 for (key in data) {
@@ -58,7 +57,7 @@ angular.module('badminton-booking')
         }
 
         var getProfileImage = function (player) {
-            var url = "https://hursley-badminton.firebaseio.com/players/" + player.uid + "/photoURL.json";
+            var url = "https://hursleybadminton.firebaseio.com/players/" + player.uid + "/photoURL.json";
             $http.get(url).then(function (resp) {
                 player.photoURL = resp.data;
             }, function (error) {
@@ -67,7 +66,7 @@ angular.module('badminton-booking')
         }
 
         var getNews = function () {
-            var url = "https://hursley-badminton.firebaseio.com/news.json";
+            var url = "https://hursleybadminton.firebaseio.com/news.json";
             $http.get(url).then(function (resp) {
                 console.log("news = ", resp.data);
                 $scope.news = resp.data;

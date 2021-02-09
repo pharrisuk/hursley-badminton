@@ -62,7 +62,7 @@ app.use('/upload', function (req, res) {
     // every time a file has been uploaded successfully,
     // rename it to it's orignal name
     form.on('file', function (field, file) {
-        fs.rename(file.path, path.join(form.uploadDir, file.name));
+        fs.rename(file.path, path.join(form.uploadDir, file.name),(err)=>{});
     });
 
     // log any errors that occur
@@ -98,7 +98,7 @@ var options = {
 
 // This route deals enables HTML5Mode by forwarding missing files to the index.html
 app.all('/*', function (req, res) {
-    res.sendfile('./public/index.html');
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 //app.use(bodyParser.json());
