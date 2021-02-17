@@ -139,6 +139,23 @@ app.service('firebase', ['$rootScope', '$state', '$q', '$http', 'players', 'bala
             });
         },
 
+        resetpw: function (email) {
+            var _this = this;
+            return $q(function (resolve, reject) {
+                firebase.auth().sendPasswordResetEmail(email).then(function (result) {
+                    console.log("Result s= ", result);
+                    resolve();
+                }).catch(function (error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // ...
+                    console.log("Reset errorCode = ", error.code);
+                    console.log("Reset errorMessage = ", error.message);                    
+                    reject(error);
+                });
+            });
+        },
 
         logout: function () {
             firebase.auth().signOut().then(function () {

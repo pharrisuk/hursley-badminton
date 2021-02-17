@@ -28,5 +28,15 @@ angular.module('badminton-booking')
                 toasterService.displayToast(error.message, "error");
             });
         }
+
+        $scope.resetpw = function () {
+            firebase.resetpw($scope.formData.email).then(function () {
+                toasterService.displayToast("An email has been sent with a link to reset your password");
+                //$state.go("home", {}, true);
+            }, function (error) {
+                console.log(error);
+                toasterService.displayToast(error.message, "error");
+            });
+        }
     }
 ]);

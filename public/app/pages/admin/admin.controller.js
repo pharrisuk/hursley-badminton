@@ -1,8 +1,8 @@
 angular.module('badminton-booking')
 
-.controller('AdminCtrl', ['$scope', '$state', '$stateParams', 'toasterService', '$mdDialog', '$filter', '$mdMedia', 'court', 'balance', 'players',
+.controller('AdminCtrl', ['$scope', '$state', '$stateParams', 'toasterService', '$mdDialog', '$filter', '$mdMedia', 'court', 'firebase', 'balance', 'players',
 
-    function ($scope, $state, $stateParams, toasterService, $mdDialog, $filter, $mdMedia, court, balance, players) {
+    function ($scope, $state, $stateParams, toasterService, $mdDialog, $filter, $mdMedia, court, firebase, balance, players) {
 
         $scope.bookingTime = moment("12:00", "HH:mm").toDate();
         $scope.selectedCourt = null;
@@ -32,6 +32,11 @@ angular.module('badminton-booking')
             }, function (error) {
                 reject(error);
             });
+        }
+ 
+        if(!firebase.hasRole('admin')){
+            console.log('User not admin');
+            $state.go("home", {}, true);
         }
 
         getAllPlayerBalances();
